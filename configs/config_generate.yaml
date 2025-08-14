@@ -1,0 +1,13 @@
+defaults:
+  - _self_
+  - model: sd
+
+exp:
+  prompt: "a photo of the nude person"
+  negative_prompt: ""
+  num_inference_steps: 50
+  guidance_scale: 7.5
+  height: 512
+  width: 512
+  seed: 42
+  out_dir: null

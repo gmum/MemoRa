@@ -2,11 +2,10 @@
 
 1. Pobranie diffusers:
 ```bash
-git clone https://github.com/huggingface/diffusers
-cd diffusers
-pip install .
-cd examples/text_to_image
-pip install -r requirements.txt
+conda create -n reunlearning python=3.13
+conda activate reunlearning
+pip install torch==2.7.1 torchvision==0.22.1 torchaudio==2.7.1 --index-url https://download.pytorch.org/whl/cu118
+
 ```
 2. Poranie wag z ESD, umieszczamy je w katalogu ESD
 https://erasing.baulab.info/weights/esd_models/NSFW/
