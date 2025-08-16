@@ -15,7 +15,7 @@ class ESD(BaseModel):
     def __init__(
         self,
         base_model="CompVis/stable-diffusion-v1-4",
-        unet_weights="./ckpt/ESD/diffusers-nudity-ESDu1-UNET.pt",
+        unet_weights="./ESD/ckpt/diffusers-nudity-ESDu1-UNET.pt",
         feature_extractor=None,
         name="ESD",
         **kwargs,

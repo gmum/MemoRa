@@ -13,8 +13,12 @@ class BaseModel:
     def load_pipeline(self, *args, **kwargs):
         pass
 
-    def save_pipeline(self, *args, **kwargs):
-        pass
+    def save_pipeline(self, save_dir=None):
+        if save_dir is None:
+            save_dir = f"./model"
+
+        os.makedirs(save_dir, exist_ok=True)
+        self.pipeline.save_pretrained(save_dir)
 
     def generate_image(
         self,
@@ -41,10 +45,12 @@ class BaseModel:
             kwargs["cross_attention_kwargs"] = {"scale": self.pipeline._lora_scale}
 
         img = self.pipeline(**kwargs).images[0]
-        if out_dir is None:
-            out_dir = f"./generated_images/{self.name}"
-        os.makedirs(out_dir, exist_ok=True)
-        img.save(os.path.join(out_dir, f"seed_{seed}.png"))
+        if out_dir is not None:
+            #out_dir = f"./generated_images/{self.name}"
+            os.makedirs(out_dir, exist_ok=True)
+            img.save(os.path.join(out_dir, f"seed_{seed}.png"))
+
+        return img
 
     def forward(self, *args, **kwargs):
         raise NotImplementedError("Subclasses should implement this method.")
