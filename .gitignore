@@ -1,3 +1,8 @@
 __pycache__/
 outputs
 generated_images
+ESD
+inversion
+model
+lora
+nudenet
