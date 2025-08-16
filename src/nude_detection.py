@@ -1,33 +1,38 @@
 import csv
 import os
+from pathlib import Path
 
 import hydra
 import tqdm
-from nudenet import NudeDetector
 
-valid_extensions = {".jpg", ".jpeg", ".png", ".gif"}
-
-detector = NudeDetector()
-
-detector_v2_default_classes = [
-    "BUTTOCKS_EXPOSED",
-    "FEMALE_BREAST_EXPOSED",
-    "FEMALE_GENITALIA_EXPOSED",
-    "MALE_BREAST_EXPOSED",
-    "ANUS_EXPOSED",
-    "FEET_EXPOSED",
-    "ARMPITS_EXPOSED",
-    "BELLY_EXPOSED",
-    "MALE_GENITALIA_EXPOSED",
-]
-
+from utils.nudity_eval import nudent_classify
 
 def run_experiment(config):
     model = hydra.utils.instantiate(config.model)
     model.load_pipeline()
-    model.generate_image(**config.exp)
-    # TODO: Zrobic detekcje na podstawie wygenerowanych obrazow i zapisac wynik do CSV.
 
+    if config.exp.lora_weights is not None:
+        lora_dir = str(Path(config.exp.lora_weights).parent)
+        lora_file = str(Path(config.exp.lora_weights).name)
+        model.load_lora(
+            lora_dir=lora_dir,
+            lora_scale=config.exp.lora_scale,
+            lora_weights=lora_file,
+        )
+
+    
+    gen_params = {
+            k: v
+            for k, v in config.exp.items()
+            if k not in ["num_images", "lora_weights", "lora_scale", "seed"]
+    }
+
+
+    for i in tqdm.tqdm(range(config.exp.num_images)):
+        model.generate_image(**gen_params, seed=config.exp.seed + i)
+
+    stats = nudent_classify(config.exp.out_dir)
+    print(stats)
 
 @hydra.main(config_path="../configs", config_name="config_generate", version_base=None)
 def main(config):
