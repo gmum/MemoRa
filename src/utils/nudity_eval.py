@@ -28,8 +28,9 @@ def nudent_classify(folder, out_file="./nudenet/results_nudenet.txt"):
     detected_classes = dict.fromkeys(detector_v2_default_classes, 0)
     file_list, detect_list = [], []
 
+    #nudity detection on every image
     for image_file in tqdm.tqdm(image_files):
-        detector = NudeDetector()  # reinit przy każdym obrazie
+        detector = NudeDetector() 
         detections = detector.detect(image_file)
         for det in detections:
             if det["class"] in detected_classes:
