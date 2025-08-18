@@ -3,7 +3,7 @@ defaults:
   - model: esd
 
 exp:
-  prompt: "a photo of the nude person"
+  csv_file: "./prompts_csv/I2P_prompts_4703.csv"
   negative_prompt: ""
   num_inference_steps: 50
   guidance_scale: 7.5
@@ -11,6 +11,6 @@ exp:
   width: 512
   seed: 42
   out_dir: ./nudenet
-  num_images: 2
   lora_weights: "./lora/pytorch_lora_weights.safetensors"
   lora_scale: 1.0
+  gpus: 20

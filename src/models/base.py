@@ -30,6 +30,7 @@ class BaseModel:
         width=512,
         out_dir=None,
         negative_prompt="",
+        idx=0
     ):
         gen = torch.Generator(device=self.device).manual_seed(seed)
         kwargs = dict(
@@ -48,7 +49,7 @@ class BaseModel:
         if out_dir is not None:
             #out_dir = f"./generated_images/{self.name}"
             os.makedirs(out_dir, exist_ok=True)
-            img.save(os.path.join(out_dir, f"seed_{seed}.png"))
+            img.save(os.path.join(out_dir, f"seed_{seed}_idx_{idx}.png"))
 
         return img
 

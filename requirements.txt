@@ -3,3 +3,5 @@ omegaconf==2.3.0
 diffusers==0.34.0
 transformers==4.55.2
 nudenet==3.4.2
+pandas==2.3.1
+peft==0.17.0
