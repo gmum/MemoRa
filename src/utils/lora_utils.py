@@ -37,7 +37,7 @@ def train_lora(
     seed
 ):
     cmd = [
-    "python", "diffusers/examples/text_to_image/train_text_to_image_lora.py",
+    "python", "../diffusers/examples/text_to_image/train_text_to_image_lora.py",
     "--pretrained_model_name_or_path", str(model_dir),
     "--train_data_dir", str(dataset_dir),
     "--dataloader_num_workers", "0",
