@@ -8,53 +8,40 @@ import hydra
 import tqdm
 
 def run_experiment(config):
-    model = hydra.utils.instantiate(config.model)
+    model = hydra.utils.instantiate(config.evaluation)
     model.load_pipeline()
 
-    if config.exp.lora_weights is not None:
-        lora_dir = str(Path(config.exp.lora_weights).parent)
-        lora_file = str(Path(config.exp.lora_weights).name)
+    #Load LoRA
+    if config.generate_images.lora_weights is not None and config.generate_images.lora_scale is not None:
+        lora_path = Path(config.lora.out_dir) / config.generate_images.lora_weights
         model.load_lora(
-            lora_dir=lora_dir,
-            lora_scale=config.exp.lora_scale,
-            lora_weights=lora_file,
+            lora_path=lora_path,
+            lora_scale=config.generate_images.lora_scale,
         )
 
-    
-    gen_params = {
-            k: v
-            for k, v in config.exp.items()
-            if k not in ["num_images", "lora_weights", "lora_scale", "seed"]
-    }
-
-    df = pd.read_csv(config.exp.csv_file)
-    num_gpus = int(config.exp.gpus)
-    gpu_id = int(os.environ.get("SLURM_ARRAY_TASK_ID", 0))
-    per_gpu = math.ceil(len(df) / num_gpus)
-    start_id = gpu_id * per_gpu
-    end_id = min(start_id + per_gpu, len(df))
-    df = df.iloc[start_id:end_id]
+    #real index from csv
+    df = pd.read_csv(config.generate_images.csv_path,index_col="index")
 
     for idx, row in tqdm.tqdm(df.iterrows(), total=len(df)):
         prompt = row.get("prompt")
         seed = int(row.get("evaluation_seed") or 2024)
-        guidance_scale = float(row.get("evaluation_guidance") or 7.5)
+        if "evaluation_guidance" in df.columns:
+            guidance_scale = float(row.get("evaluation_guidance") or config.generate_images.guidance_scale)
+        else:
+            guidance_scale = float(config.generate_images.guidance_scale)
 
-        gen_params = {
+        generate_images_params = {
             "prompt": prompt,
-            "negative_prompt": config.exp.negative_prompt,
-            "num_inference_steps": config.exp.num_inference_steps,
+            "num_inference_steps": config.generate_images.num_inference_steps,
             "guidance_scale": guidance_scale,
-            "height": config.exp.height,
-            "width": config.exp.width,
-            "out_dir": config.exp.out_dir,
+            "out_dir": config.generate_images.out_dir,
             "seed": int(seed),
             "idx": idx
         }
 
-        img = model.generate_image(**gen_params)
+        img = model.generate_image(**generate_images_params)
 
-@hydra.main(config_path="../configs", config_name="config_generate", version_base=None)
+@hydra.main(config_path="../configs", config_name="reunlearning_explicit_content", version_base=None)
 def main(config):
     run_experiment(config)
 

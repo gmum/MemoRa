@@ -49,7 +49,7 @@ class BaseModel:
         if out_dir is not None:
             #out_dir = f"./generated_images/{self.name}"
             os.makedirs(out_dir, exist_ok=True)
-            img.save(os.path.join(out_dir, f"seed_{seed}_idx_{idx}.png"))
+            img.save(os.path.join(out_dir, f"idx_{idx}_seed_{seed}.png"))
 
         return img
 
