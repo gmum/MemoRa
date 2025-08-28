@@ -11,7 +11,7 @@ class BaseModel:
         self.name = name
 
     def load_pipeline(self, *args, **kwargs):
-        pass
+        raise NotImplementedError("Subclasses should implement this method.")
 
     def save_pipeline(self, save_dir=None):
         if save_dir is None:
@@ -32,7 +32,7 @@ class BaseModel:
         negative_prompt="",
         idx=0
     ):
-        gen = torch.Generator(device=self.device).manual_seed(seed)
+        gen = torch.manual_seed(seed)
         kwargs = dict(
             prompt=prompt,
             negative_prompt=negative_prompt,

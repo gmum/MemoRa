@@ -1,11 +1,11 @@
 from .unet_base import BaseUnet
 
 
-class ESD(BaseUnet):
+class SalUn(BaseUnet):
     def __init__(
         self,
         unet_weights,
-        name="ESD",
+        name="SalUn",
         **kwargs,
     ):
         super().__init__(name=name, unet_weights=unet_weights, **kwargs)
