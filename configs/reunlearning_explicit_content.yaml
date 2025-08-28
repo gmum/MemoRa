@@ -17,6 +17,7 @@ interpolation:
   interp_steps: 10
   out_dir: "../interpolation/${unlearned.name}/${erasing_concept.text_for_dir}"
   model_path: "../models/${unlearned.name}/${erasing_concept.text_for_dir}"
+  start_step: 15
 
 
 #LoRA training
@@ -37,9 +38,7 @@ generate_images:
   guidance_scale: 7.5
   out_dir: "${lora.out_dir}/images/${evaluation.name}_with_${generate_images.lora_weights}/${generate_images.csv_file}/photos"
   lora_weights: "pytorch_lora_weights.safetensors"
-  #lora_weights: null
   lora_scale: 1.0
-  #lora_scale: null
   start_index: 0
   n_images: 100
 
@@ -51,7 +50,7 @@ nudenet_classifier:
 
 #fid
 fid:
-  first_dir: "C:/Users/polowczyk/Desktop/repozytoria/reunlearning/lora/ESD/nsfw/images/ESD_with_pytorch_lora_weights.safetensors/coco_10k.csv/photos"  
-  second_dir: "C:/Users/polowczyk/Desktop/repozytoria/reunlearning/lora/ESD/nsfw/images/ESD_with_None/coco_10k.csv/photos"  
+  first_dir: "lora/ESD/nsfw/images/ESD_with_pytorch_lora_weights.safetensors/coco_10k.csv/photos"  
+  second_dir: "lora/ESD/nsfw/images/ESD_with_None/coco_10k.csv/photos"  
   out_dir: "${lora.out_dir}/images/fid"  
   file_name: "results_fid.txt"

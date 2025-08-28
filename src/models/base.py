@@ -33,7 +33,7 @@ class BaseModel:
         idx=0
     ):
         gen = torch.Generator(device=self.device).manual_seed(seed)
-        kwargs = dict(
+        generation_params = dict(
             prompt=prompt,
             negative_prompt=negative_prompt,
             num_inference_steps=num_inference_steps,
@@ -43,11 +43,10 @@ class BaseModel:
             width=width,
         )
         if hasattr(self.pipeline, "_lora_scale"):
-            kwargs["cross_attention_kwargs"] = {"scale": self.pipeline._lora_scale}
+            generation_params["cross_attention_kwargs"] = {"scale": self.pipeline._lora_scale}
 
-        img = self.pipeline(**kwargs).images[0]
+        img = self.pipeline(**generation_params).images[0]
         if out_dir is not None:
-            #out_dir = f"./generated_images/{self.name}"
             os.makedirs(out_dir, exist_ok=True)
             img.save(os.path.join(out_dir, f"idx_{idx}_seed_{seed}.png"))
 

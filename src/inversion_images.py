@@ -7,7 +7,7 @@ import tqdm
 
 from utils.latent_iversion import slerp, encode_to_latent, sample, invert
 
-def run_experiment(config):
+def inversion_process(config):
     model_unlearned = hydra.utils.instantiate(config.unlearned)
     model_unlearned.load_pipeline()
 
@@ -31,15 +31,16 @@ def run_experiment(config):
         image_b = model_original.generate_image(**images_for_inversion_params, seed=int(seed_b))
 
         #latents of photos after VAE
-        z_start_a = encode_to_latent(model_unlearned.pipeline, image_a)
-        z_start_b = encode_to_latent(model_unlearned.pipeline, image_b)
+        z_0_a = encode_to_latent(model_unlearned.pipeline, image_a)
+        z_0_b = encode_to_latent(model_unlearned.pipeline, image_b)
 
         #starting latents obtained by inversion
-        inversion_a = invert(pipe= model_unlearned.pipeline, start_latents=z_start_a, **images_for_inversion_params)
-        inversion_b = invert(pipe= model_unlearned.pipeline, start_latents=z_start_b, **images_for_inversion_params)
+        intermediate_latents_a = invert(pipe= model_unlearned.pipeline, start_latents=z_0_a, **images_for_inversion_params)
+        intermediate_latents_b = invert(pipe= model_unlearned.pipeline, start_latents=z_0_b, **images_for_inversion_params)
          
-        z_T_a = inversion_a[-1].unsqueeze(0)
-        z_T_b = inversion_b[-1].unsqueeze(0)
+        #where T=50, 100 ...
+        z_T_a = intermediate_latents_a[-(config.interpolation.start_step + 1)].unsqueeze(0)
+        z_T_b = intermediate_latents_b[-(config.interpolation.start_step + 1)].unsqueeze(0)
         
         #k = number of intervals between endpoints
         k = int(config.interpolation.interp_steps)
@@ -47,7 +48,7 @@ def run_experiment(config):
             interval = i/k
             interpolation_z = slerp(z_T_a[0], z_T_b[0], interval).unsqueeze(0)
 
-            interpolation_img = sample(model_unlearned.pipeline, start_latents=interpolation_z, **images_for_inversion_params)
+            interpolation_img = sample(model_unlearned.pipeline, start_step=config.interpolation.start_step, start_latents=interpolation_z, **images_for_inversion_params)
             interpolation_img = interpolation_img[0]
 
             file_name = f"{pair_index}_interval{interval:.2f}.png"
@@ -58,7 +59,7 @@ def run_experiment(config):
 
 @hydra.main(config_path="../configs", config_name="reunlearning_explicit_content", version_base=None)
 def main(config):
-    run_experiment(config)
+    inversion_process(config)
 
 
 if __name__ == "__main__":

@@ -14,8 +14,8 @@ from .base import BaseModel
 class ESD(BaseModel):
     def __init__(
         self,
+        unet_weights,
         base_model="CompVis/stable-diffusion-v1-4",
-        unet_weights=None,
         feature_extractor=None,
         name="ESD",
         **kwargs,
@@ -57,6 +57,6 @@ class ESD(BaseModel):
 
     def load_lora(self, lora_path, lora_scale):
         lora_dir = lora_path.parent
-        lora_weights = lora_path.name
-        self.pipeline.load_lora_weights(lora_dir, weight_name=lora_weights)
+        weight_name = lora_path.name
+        self.pipeline.load_lora_weights(lora_dir, weight_name=weight_name)
         self.pipeline._lora_scale = lora_scale

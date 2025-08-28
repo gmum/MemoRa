@@ -4,5 +4,5 @@ base_model: "CompVis/stable-diffusion-v1-4"
 device: "cuda"
 torch_dtype: "float16"
 safety_checker: null
-unet_weights: "C:/Users/polowczyk/Desktop/repozytoria/reunlearning/ESD/ckpt/diffusers-nudity-ESDu1-UNET.pt"
+unet_weights: "weights/diffusers-nudity-ESDu1-UNET.pt"
 name: "ESD"

@@ -7,7 +7,7 @@ import math
 import hydra
 import tqdm
 
-def run_experiment(config):
+def generate_images(config):
     model = hydra.utils.instantiate(config.evaluation)
     model.load_pipeline()
 
@@ -30,7 +30,7 @@ def run_experiment(config):
         else:
             guidance_scale = float(config.generate_images.guidance_scale)
 
-        generate_images_params = {
+        generate_image_params = {
             "prompt": prompt,
             "num_inference_steps": config.generate_images.num_inference_steps,
             "guidance_scale": guidance_scale,
@@ -39,11 +39,11 @@ def run_experiment(config):
             "idx": idx
         }
 
-        img = model.generate_image(**generate_images_params)
+        img = model.generate_image(**generate_image_params)
 
 @hydra.main(config_path="../configs", config_name="reunlearning_explicit_content", version_base=None)
 def main(config):
-    run_experiment(config)
+    generate_images(config)
 
 
 if __name__ == "__main__":
