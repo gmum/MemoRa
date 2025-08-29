@@ -26,7 +26,11 @@ def generate_images(config):
         prompt = row.get("prompt")
         seed = int(row.get("evaluation_seed") or 2024)
         if "evaluation_guidance" in df.columns:
-            guidance_scale = float(row.get("evaluation_guidance") or config.generate_images.guidance_scale)
+            guidance_scale = float(
+                row.get("evaluation_guidance")
+                if row.get("evaluation_guidance")
+                else config.generate_images.guidance_scale
+            )
         else:
             guidance_scale = float(config.generate_images.guidance_scale)
 
