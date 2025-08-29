@@ -4,5 +4,5 @@ base_model: "CompVis/stable-diffusion-v1-4"
 device: "cuda"
 torch_dtype: "float32"
 safety_checker: null
-unet_weights: "weights/AdvUnlearn_Nudity_text_encoder_full.pt"
+unet_weights: "weights/AdvUnlearn/AdvUnlearn_Nudity_text_encoder_full.pt"
 name: "AdvUnlearn"
