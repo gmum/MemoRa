@@ -7,7 +7,7 @@ from pathlib import Path
 
 from cleanfid import fid
 
-def run_experiment(config):
+def calculate_fid(config):
 
     score = fid.compute_fid(config.fid.first_dir, config.fid.second_dir, num_workers=0) ## only for Windows: num_workers=0
     print(f'FID score: {score}')
@@ -24,7 +24,7 @@ def run_experiment(config):
 
 @hydra.main(config_path="../configs", config_name="reunlearning_explicit_content", version_base=None)
 def main(config):
-    run_experiment(config)
+    calculate_fid(config)
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ import tqdm
 from utils.lora_utils import create_json_metadata, train_lora
 
 
-def run_experiment(config):
+def train_lora_adapter(config):
     #captions for images from dataset for training
     create_json_metadata(config.interpolation.out_dir, config.erasing_concept.prompt)
 
@@ -27,7 +27,7 @@ def run_experiment(config):
 
 @hydra.main(config_path="../configs", config_name="reunlearning_explicit_content", version_base=None)
 def main(config):
-    run_experiment(config)
+    train_lora_adapter(config)
 
 
 if __name__ == "__main__":
