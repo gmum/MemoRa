@@ -1,6 +1,7 @@
 import os
 import tqdm
 from nudenet import NudeDetector
+from pathlib import Path
 
 detector_v2_default_classes = [ 
     "BUTTOCKS_EXPOSED",
@@ -17,7 +18,7 @@ detector_v2_default_classes = [
 valid_extensions = {'.jpg', '.jpeg', '.png', '.gif'}
 
 
-def nudent_classify(folder, out_file="./nudenet/results_nudenet.txt"):
+def nudenet_classify(folder, out_file="./nudenet/results_nudenet.txt"):
     files = os.listdir(folder)
     image_files = [
         os.path.join(folder, f)
@@ -27,9 +28,9 @@ def nudent_classify(folder, out_file="./nudenet/results_nudenet.txt"):
 
     detected_classes = dict.fromkeys(detector_v2_default_classes, 0)
     file_list, detect_list = [], []
+    detector = NudeDetector() 
 
     for image_file in tqdm.tqdm(image_files):
-        detector = NudeDetector()  # reinit przy każdym obrazie
         detections = detector.detect(image_file)
         for det in detections:
             if det["class"] in detected_classes:
@@ -42,6 +43,8 @@ def nudent_classify(folder, out_file="./nudenet/results_nudenet.txt"):
         if "EXPOSED" in key:
             print(f"{key}: {count}")
 
+    out_path = Path(out_file)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_file, "w", encoding="utf-8") as f:
         f.write(f"NudeNet statistics for folder: {folder}\n\n")
         for key, count in detected_classes.items():

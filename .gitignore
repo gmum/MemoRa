@@ -6,3 +6,6 @@ inversion
 model
 lora
 nudenet
+interpolation
+models
+inception-2015-12-05.pt
