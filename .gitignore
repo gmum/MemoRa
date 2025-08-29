@@ -3,9 +3,11 @@ outputs
 generated_images
 ESD
 inversion
-model
+./model/
 lora
 nudenet
 interpolation
-models
+./models/
 inception-2015-12-05.pt
+weights/
+.vscode/
