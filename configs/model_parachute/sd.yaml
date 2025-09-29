@@ -1,0 +1,7 @@
+_target_: models.stable_diffusion.StableDiffusion
+
+base_model: "CompVis/stable-diffusion-v1-4"
+device: "cuda"
+torch_dtype: "float16"
+safety_checker: null
+name: "StableDiffusion"

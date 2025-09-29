@@ -1,8 +1,4 @@
-import csv
-import os
-
 import hydra
-import tqdm
 
 from utils.lora_utils import create_json_metadata, train_lora
 
@@ -25,7 +21,7 @@ def train_lora_adapter(config):
     )
 
 
-@hydra.main(config_path="../configs", config_name="reunlearning_explicit_content", version_base=None)
+@hydra.main(config_path="../configs", config_name="reunlearning_nudity", version_base=None)
 def main(config):
     train_lora_adapter(config)
 

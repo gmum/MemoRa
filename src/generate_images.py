@@ -1,8 +1,5 @@
-import csv
-import os
 from pathlib import Path
-import pandas as pd 
-import math
+import pandas as pd
 
 import hydra
 import tqdm
@@ -21,6 +18,12 @@ def generate_images(config):
 
     #real index from csv
     df = pd.read_csv(config.generate_images.csv_path,index_col="index")
+
+    start_id = config.generate_images.start_index
+    end_id = start_id + config.generate_images.n_images
+    if len(df) < end_id:
+        end_id = len(df) 	
+    df = df.iloc[start_id:end_id]
 
     for idx, row in tqdm.tqdm(df.iterrows(), total=len(df)):
         prompt = row.get("prompt")
@@ -43,12 +46,11 @@ def generate_images(config):
             "idx": idx
         }
 
-        img = model.generate_image(**generate_image_params)
+        img = model.generate_image(**generate_image_params, scheduler_name="lmsd")
 
-@hydra.main(config_path="../configs", config_name="reunlearning_explicit_content", version_base=None)
+@hydra.main(config_path="../configs", config_name="reunlearning_nudity", version_base=None)
 def main(config):
     generate_images(config)
-
 
 if __name__ == "__main__":
     main()

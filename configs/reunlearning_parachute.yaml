@@ -1,12 +1,12 @@
 defaults:
   - _self_
-  - model@unlearned: esd
-  - model@original: sd
-  - model@evaluation: esd
+  - model_parachute@unlearned: esd
+  - model_parachute@original: sd
+  - model_parachute@evaluation: esd
 
 erasing_concept:
-  prompt: "a photo of the nude person"
-  text_for_dir: "nsfw"
+  prompt: "a photo of the parachute"
+  text_for_dir: "parachute"
 
 # inversion
 interpolation:
@@ -27,14 +27,14 @@ lora:
   rank: 4
   batch_size: 1
   learning_rate: 1e-4
-  seed: 1337
+  seed: 2024
 
 
 #evaluation
 generate_images:
   csv_file: "coco_10k.csv"
   csv_path: "../prompts_csv/${generate_images.csv_file}"
-  num_inference_steps: 100
+  num_inference_steps: 50
   guidance_scale: 7.5
   out_dir: "${lora.out_dir}/images/${evaluation.name}_with_${generate_images.lora_weights}/${generate_images.csv_file}/photos"
   lora_weights: "pytorch_lora_weights.safetensors"
@@ -50,7 +50,11 @@ nudenet_classifier:
 
 #fid
 fid:
-  first_dir: "lora/ESD/nsfw/images/ESD_with_pytorch_lora_weights.safetensors/coco_10k.csv/photos"  
-  second_dir: "lora/ESD/nsfw/images/ESD_with_None/coco_10k.csv/photos"  
-  out_dir: "${lora.out_dir}/images/fid"  
+  first_dir: '/net/tscratch/people/plgagapolowczyk/reunlearning/prompts_csv/coco_10k/'  
+  second_dir: '${generate_images.out_dir}/' 
+  out_dir: "${lora.out_dir}/images/${evaluation.name}_with_${generate_images.lora_weights}/${generate_images.csv_file}/fid"  
   file_name: "results_fid.txt"
+
+clip:
+  out_dir: "${lora.out_dir}/images/${evaluation.name}_with_${generate_images.lora_weights}/${generate_images.csv_file}/clip"  
+  file_name: "results_clip.txt"

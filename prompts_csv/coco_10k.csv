@@ -1,4 +1,4 @@
-case_number,source,prompt,evaluation_seed
+index,source,prompt,evaluation_seed
 000000203564,coco-30k,A bicycle replica with a clock as the front wheel.,41337
 000000179765,coco-30k,A black Honda motorcycle parked in front of a garage.,63155
 000000322141,coco-30k,A room with blue walls and a white sink and door.,78978

@@ -3,7 +3,7 @@ from transformers import CLIPTextModel, CLIPTokenizer
 
 from diffusers import (
     AutoencoderKL,
-    LMSDiscreteScheduler,
+    DDIMScheduler,
     StableDiffusionPipeline,
     UNet2DConditionModel,
 )
@@ -39,12 +39,8 @@ class AdvUnlearn(BaseModel):
             self.base_model, subfolder="text_encoder", torch_dtype=self.torch_dtype
         ).to(self.device)
         text_encoder.load_state_dict(self.extract_text_encoder_ckpt(), strict=False)
-        scheduler = LMSDiscreteScheduler(
-            beta_start=0.00085,
-            beta_end=0.012,
-            beta_schedule="scaled_linear",
-            num_train_timesteps=1000,
-            steps_offset=1,
+        scheduler = DDIMScheduler.from_pretrained(
+            self.base_model, subfolder="scheduler"
         )
 
         self.pipeline = StableDiffusionPipeline(

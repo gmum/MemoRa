@@ -1,9 +1,7 @@
 #import csv
-import os
 from pathlib import Path
 
 import hydra
-import tqdm
 
 from utils.latent_iversion import slerp, encode_to_latent, sample, invert
 
@@ -57,7 +55,7 @@ def inversion_process(config):
     model_unlearned.save_pipeline(save_dir = config.interpolation.model_path)
 
 
-@hydra.main(config_path="../configs", config_name="reunlearning_explicit_content", version_base=None)
+@hydra.main(config_path="../configs", config_name="reunlearning_nudity", version_base=None)
 def main(config):
     inversion_process(config)
 
