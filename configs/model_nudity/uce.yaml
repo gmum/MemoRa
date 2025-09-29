@@ -1,0 +1,8 @@
+_target_: models.uce.UCE
+
+base_model: "CompVis/stable-diffusion-v1-4"
+device: "cuda"
+torch_dtype: "float32"
+safety_checker: null
+unet_weights: "../weights/UCE-Nudity-Diffusers-UNet.pt"
+name: "UCE"

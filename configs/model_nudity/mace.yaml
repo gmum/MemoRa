@@ -1,0 +1,7 @@
+_target_: models.mace.MACE
+
+base_model: "../weights/MACE/nudity/"
+device: "cuda"
+torch_dtype: "float16"
+safety_checker: null
+name: "MACE"

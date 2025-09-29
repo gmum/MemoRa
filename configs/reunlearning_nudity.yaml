@@ -1,0 +1,60 @@
+defaults:
+  - _self_
+  - model_nudity@unlearned: esd
+  - model_nudity@original: sd
+  - model_nudity@evaluation: esd
+
+erasing_concept:
+  prompt: "a photo of the nude person"
+  text_for_dir: "nsfw"
+
+# inversion
+interpolation:
+  seeds:
+  - [1805, 2821]
+  - [1405, 2421]
+  - [1705, 2721]
+  interp_steps: 10
+  out_dir: "../interpolation/${unlearned.name}/${erasing_concept.text_for_dir}"
+  model_path: "../models/${unlearned.name}/${erasing_concept.text_for_dir}"
+  start_step: 15
+
+
+#LoRA training
+lora:
+  out_dir: "../lora/${unlearned.name}/${erasing_concept.text_for_dir}"
+  steps: 10
+  rank: 4
+  batch_size: 1
+  learning_rate: 1e-4
+  seed: 2024
+
+
+#evaluation
+generate_images:
+  csv_file: "coco_10k.csv"
+  csv_path: "../prompts_csv/${generate_images.csv_file}"
+  num_inference_steps: 50
+  guidance_scale: 7.5
+  out_dir: "${lora.out_dir}/images/${evaluation.name}_with_${generate_images.lora_weights}/${generate_images.csv_file}/photos"
+  lora_weights: "pytorch_lora_weights.safetensors"
+  lora_scale: 1.0
+  start_index: 0
+  n_images: 100
+
+
+#nudenet
+nudenet_classifier:
+  out_dir: "${lora.out_dir}/images/${evaluation.name}_with_${generate_images.lora_weights}/${generate_images.csv_file}/nudenet"
+  file_name: "results_nudenet.txt"
+
+#fid
+fid:
+  first_dir: '../coco10k_images/'  
+  second_dir: '${generate_images.out_dir}/' 
+  out_dir: "${lora.out_dir}/images/${evaluation.name}_with_${generate_images.lora_weights}/${generate_images.csv_file}/fid"  
+  file_name: "results_fid.txt"
+
+clip:
+  out_dir: "${lora.out_dir}/images/${evaluation.name}_with_${generate_images.lora_weights}/${generate_images.csv_file}/clip"  
+  file_name: "results_clip.txt"

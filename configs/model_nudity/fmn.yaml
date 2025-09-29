@@ -1,0 +1,8 @@
+_target_: models.fmn.FMN
+
+base_model: "CompVis/stable-diffusion-v1-4"
+device: "cuda"
+torch_dtype: "float32"
+safety_checker: null
+unet_weights: "../weights/FMN-Nudity-Diffusers-UNet.pt"
+name: "FMN"
