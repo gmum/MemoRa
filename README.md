@@ -1,7 +1,8 @@
 <img src="./assets/teaser.jpg" />
 
 # Memory Self-Regeneration: Uncovering Hidden Knowledge in Unlearned Models
-Agnieszka Polowczyk, Alicja Polowczyk, Joanna Waczyńska, Piotr Borycki, Przemysław Spurek (*equal contribution)
+Agnieszka Polowczyk*, Alicja Polowczyk*, Joanna Waczyńska, Piotr Borycki, Przemysław Spurek (*equal contribution)
+
 
 
 **Abstract:** The impressive capability of modern text-to-image models to generate realistic visuals has come with a serious drawback: they can be misused to create harmful, deceptive or unlawful content. This has accelerated the push for machine unlearning. This new field seeks to selectively remove specific knowledge from a model's training data without causing a drop in its overall performance. However, it turns out that actually forgetting a given concept is an extremely difficult task. Models exposed to attacks using adversarial prompts show the ability to generate so-called unlearned concepts, which can be not only harmful but also illegal. In this paper, we present considerations regarding the ability of models to forget and recall knowledge, introducing the Memory Self-Regeneration task. Furthermore, we present MemoRa strategy, which we consider to be a regenerative approach supporting the effective recovery of previously lost knowledge. Moreover, we propose that robustness in knowledge retrieval is a crucial yet underexplored evaluation measure for developing more robust and effective unlearning techniques. Finally, we demonstrate that forgetting occurs in two distinct ways: short-term, where concepts can be quickly recalled, and long-term, where recovery is more challenging. 
@@ -47,7 +48,10 @@ pip install -r requirements.txt
 pip install gdown
 ```
 
-### 2.2 Download model checkpoints (https://github.com/OPTML-Group/AdvUnlearn)
+### 2.2 Download model checkpoints
+We use pretrained checkpoints from:  
+- [AdvUnlearn](https://github.com/OPTML-Group/AdvUnlearn)  
+- [MACE](https://github.com/Shilin-LU/MACE?tab=readme-ov-file)
 ```bash
 # AdvUnlearn ckpts
 gdown --folder https://drive.google.com/drive/folders/1toiNWxJEX0X8pm8b88Og5_nMAqq6NZRd
@@ -64,7 +68,7 @@ gdown https://drive.google.com/uc?id=1OjYiFxYwd1B9R7vfKG6mooY27O2txYNg
 ```
 
 ## 3. MemoRa
-If you want to run experiments for objects or styles, simply change the config name. 
+If you want to run experiments for objects, simply change the config name. 
 
 **Important:** use the correct prefix (`model_nudity@`, `model_parachute@`, etc.)
 
@@ -130,6 +134,7 @@ python generate_images.py \
 ```
 
 ## 4. Evaluation with FID & CLIP
+COCO-10k (for CLIP score and FID): you can extract the image subset from COCO dataset, or you can download it from [here](https://drive.google.com/file/d/1Qgm3nNhp6ykamszN_ZvofvuzjryTsPHB/view).  
 ### 4.1 Install extra packages:
 ```bash
 pip install git+https://github.com/openai/CLIP.git
