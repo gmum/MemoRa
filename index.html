@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Primary Meta Tags -->
+  <!-- TODO: Replace with your paper title and author names -->
+  <meta name="title" content="Memory Self-Regeneration: Uncovering Hidden Knowledge in Unlearned Models - Polowczyk, Polowczyk, Waczyńska, Borycki, Spurek ">
+  <!-- TODO: Write a compelling 150-160 character description of your research -->
+  <meta name="description" content="We present the MemoRa strategy, which describes Memory Self-Regeneration from Unlearned Diffusion Models.">
+  <!-- TODO: Add 5-10 relevant keywords for your research area -->
+  <meta name="keywords" content="machine learning, computer vision, unlearning, diffusion models, memory, relearning, LoRA">
+  <!-- TODO: List all authors -->
+  <meta name="author" content="Agnieszka Polowczyk, Alicja Polowczyk, Joanna Waczyńska, Piotr Borycki, Przemysław Spurek">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <!-- TODO: Replace with your institution or lab name -->
+  <meta property="og:site_name" content="Jagiellonian University">
+  <!-- TODO: Same as paper title above -->
+  <meta property="og:title" content="Memory Self-Regeneration: Uncovering Hidden Knowledge in Unlearned Models">
+  <!-- TODO: Same as description above -->
+  <meta property="og:description" content="We present the MemoRa strategy, which describes Memory Self-Regeneration from Unlearned Diffusion Models.">
+  <!-- TODO: Replace with your actual website URL -->
+  <meta property="og:url" content="https://gmum.github.io/MemoRa/">
+  <!-- TODO: Create a 1200x630px preview image and update path -->
+  <meta property="og:image" content="https://gmum.github.io/MemoRa/static/images/teaser_1200_630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Main results from Memory Self-Regeneration: Uncovering Hidden Knowledge in Unlearned Models">
+  <meta property="article:author" content="Agnieszka Polowczyk">
+  <meta property="article:author" content="Alicja Polowczyk">
+  <meta property="article:author" content="Joanna Waczyńska">
+  <meta property="article:author" content="Piotr Borycki">
+  <meta property="article:author" content="Przemysław Spurek">
+  <meta property="article:section" content="Computer Vision">
+  <meta property="article:tag" content="Diffusion Models">
+  <meta property="article:tag" content="LoRA">
+  <meta property="article:tag" content="Machine Learning">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="Memory Self-Regeneration: Uncovering Hidden Knowledge in Unlearned Models">
+  <meta name="citation_author" content="Polowczyk, Agnieszka">
+  <meta name="citation_author" content="Polowczyk, Alicja">
+  <meta name="citation_author" content="Waczyńska, Joanna">
+  <meta name="citation_author" content="Borycki, Piotr">
+  <meta name="citation_author" content="Spurek, Przemysław">
+  <!-- <meta name="citation_publication_date" content="2024">
+  <meta name="citation_conference_title" content="CONFERENCE_NAME">-->
+  <meta name="citation_pdf_url" content="arxiv_link">
+  
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+
+  <!-- TODO: Replace with your paper title and authors -->
+  <title>Memory Self-Regeneration: Uncovering Hidden Knowledge in Unlearned Models</title>
+  
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon_mapet.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon_mapet.ico">
+  
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+  
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Memory Self-Regeneration: Uncovering Hidden Knowledge in Unlearned Models",
+    "description": "We present the MemoRa strategy, which describes Memory Self-Regeneration from Unlearned Diffusion Models.",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Agnieszka Polowczyk",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Silesian University of Technology"
+        }
+      },
+      {
+        "@type": "Person",
+        "name": "Alicja Polowczyk",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Silesian University of Technology"
+        }
+      },
+      {
+        "@type": "Person",
+        "name": "Joanna Waczyńska",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Jagiellonian University"
+        }
+      },
+      {
+        "@type": "Person",
+        "name": "Piotr Borycki",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Jagiellonian University"
+        }
+      },
+      {
+        "@type": "Person",
+        "name": "Przemysław Spurek",
+        "affiliation": [
+        {
+          "@type": "Organization",
+          "name": "Jagiellonian University"
+        },
+        {
+          "@type": "Organization",
+          "name": "IDEAS Research Institute"
+        }
+      ]
+      }
+    ],
+    <!--
+    "datePublished": "2024-01-01",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CONFERENCE_OR_JOURNAL_NAME"
+    },
+  -->
+    "url": "https://gmum.github.io/MemoRa/",
+    "image": "https://gmum.github.io/MemoRa/static/images/teaser_1200_630.jpg",
+    "keywords": ["machine learning", "computer vision", "diffusion models", "unlearning", "LoRA"],
+    "abstract": "The impressive capability of modern text-to-image models to generate realistic visuals has come with a serious drawback: they can be misused to create harmful, deceptive or unlawful content. 
+    This has accelerated the push for machine unlearning. This new field seeks to selectively remove specific knowledge from a model's training data without causing a drop in its overall performance. 
+    However, it turns out that actually forgetting a given concept is an extremely difficult task. 
+    Models exposed to attacks using adversarial prompts show the ability to generate so-called unlearned concepts, which can be not only harmful but also illegal. 
+    In this paper, we present considerations regarding the ability of models to forget and recall knowledge, introducing the Memory Self-Regeneration task. 
+    Furthermore, we present MemoRa strategy, which we consider to be a regenerative approach supporting the effective recovery of previously lost knowledge. 
+    Moreover, we propose that robustness in knowledge retrieval is a crucial yet underexplored evaluation measure for developing more robust and effective unlearning techniques. 
+    Finally, we demonstrate that forgetting occurs in two distinct ways: short-term, where concepts can be quickly recalled, and long-term, where recovery is more challenging.",
+    "citation": "@article{chang2023muse,
+  title={Muse: Text-to-image generation via masked generative transformers},
+  author={Chang, Huiwen and Zhang, Han and Barber, Jarred and Maschinot, AJ and Lezama, Jose and Jiang, Lu and Yang, Ming-Hsuan and Murphy, Kevin and Freeman, William T and Rubinstein, Michael and others},
+  journal={arXiv preprint arXiv:2301.00704},
+  year={2023}
+}
+
+@article{ding2022cogview2,
+  title={Cogview2: Faster and better text-to-image generation via hierarchical transformers},
+  author={Ding, Ming and Zheng, Wendi and Hong, Wenyi and Tang, Jie},
+  journal={Advances in Neural Information Processing Systems},
+  volume={35},
+  pages={16890--16902},
+}
+
+@inproceedings{lu2023tf,
+  title={Tf-icon: Diffusion-based training-free cross-domain image composition},
+  author={Lu, Shilin and Liu, Yanzhu and Kong, Adams Wai-Kin},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={2294--2305},
+  year={2023}
+}
+
+
+@article{ramesh2022hierarchical,
+  title={Hierarchical text-conditional image generation with clip latents},
+  author={Ramesh, Aditya and Dhariwal, Prafulla and Nichol, Alex and Chu, Casey and Chen, Mark},
+  journal={arXiv preprint arXiv:2204.06125},
+  volume={1},
+  number={2},
+  pages={3},
+  year={2022}
+}
+
+
+@inproceedings{zhou2024migc,
+  title={Migc: Multi-instance generation controller for text-to-image synthesis},
+  author={Zhou, Dewei and Li, You and Ma, Fan and Zhang, Xiaoting and Yang, Yi},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={6818--6828},
+  year={2024}
+}
+
+@article{malarz2025classifier,
+  title={Classifier-free Guidance with Adaptive Scaling},
+  author={Malarz, Dawid and Kasymov, Artur and Zieba, Maciej and Tabor, Jacek and Spurek, Przemys{\l}aw},
+  journal={arXiv preprint arXiv:2502.10574},
+  year={2025}
+}
+
+@inproceedings{gandikota2023erasing,
+  title={Erasing concepts from diffusion models},
+  author={Gandikota, Rohit and Materzynska, Joanna and Fiotto-Kaufman, Jaden and Bau, David},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={2426--2436},
+  year={2023}
+}
+
+@inproceedings{zhang2024forget,
+  title={Forget-me-not: Learning to forget in text-to-image diffusion models},
+  author={Zhang, Gong and Wang, Kai and Xu, Xingqian and Wang, Zhangyang and Shi, Humphrey},
+  booktitle={Proceedings of the IEEE/CVF conference on computer vision and pattern recognition},
+  pages={1755--1764},
+  year={2024}
+}
+
+@inproceedings{gandikota2024unified,
+  title={Unified concept editing in diffusion models},
+  author={Gandikota, Rohit and Orgad, Hadas and Belinkov, Yonatan and Materzy{\'n}ska, Joanna and Bau, David},
+  booktitle={Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision},
+  pages={5111--5120},
+  year={2024}
+}
+
+@article{sendera2025semu,
+  title={SEMU: Singular Value Decomposition for Efficient Machine Unlearning},
+  author={Sendera, Marcin and Struski, Lukasz and Ksiazek, Kamil and Musiol, Kryspin and Tabor, Jacek and Rymarczyk, Dawid},
+  journal={arXiv preprint arXiv:2502.07587},
+  year={2025}
+}
+
+@inproceedings{lu2024mace,
+  title={Mace: Mass concept erasure in diffusion models},
+  author={Lu, Shilin and Wang, Zilan and Li, Leyang and Liu, Yanzhu and Kong, Adams Wai-Kin},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={6430--6440},
+  year={2024}
+}
+
+@article{polowczyk2025unguide,
+  title={UnGuide: Learning to Forget with LoRA-Guided Diffusion Models},
+  author={Polowczyk, Agnieszka and Polowczyk, Alicja and Malarz, Dawid and Kasymov, Artur and Mazur, Marcin and Tabor, Jacek and Spurek, Przemys{\'L} and others},
+  journal={arXiv preprint arXiv:2508.05755},
+  year={2025}
+}
+
+@inproceedings{zhang2024generate,
+  title={To generate or not? safety-driven unlearned diffusion models are still easy to generate unsafe images... for now},
+  author={Zhang, Yimeng and Jia, Jinghan and Chen, Xin and Chen, Aochuan and Zhang, Yihua and Liu, Jiancheng and Ding, Ke and Liu, Sijia},
+  booktitle={European Conference on Computer Vision},
+  pages={385--403},
+  year={2024},
+  organization={Springer}
+}
+
+@inproceedings{jiang2023ai,
+  title={AI Art and its Impact on Artists},
+  author={Jiang, Harry H and Brown, Lauren and Cheng, Jessica and Khan, Mehtab and Gupta, Abhishek and Workman, Deja and Hanna, Alex and Flowers, Johnathan and Gebru, Timnit},
+  booktitle={Proceedings of the 2023 AAAI/ACM Conference on AI, Ethics, and Society},
+  pages={363--374},
+  year={2023}
+}
+
+@inproceedings{george2025illusion,
+  title={The Illusion of Unlearning: The Unstable Nature of Machine Unlearning in Text-to-Image Diffusion Models},
+  author={George, Naveen and Dasaraju, Karthik Nandan and Chittepu, Rutheesh Reddy and Mopuri, Konda Reddy},
+  booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
+  pages={13393--13402},
+  year={2025}
+}
+
+@inproceedings{wang2024eviledit,
+  title={Eviledit: Backdooring text-to-image diffusion models in one second},
+  author={Wang, Hao and Guo, Shangwei and He, Jialing and Chen, Kangjie and Zhang, Shudong and Zhang, Tianwei and Xiang, Tao},
+  booktitle={Proceedings of the 32nd ACM International Conference on Multimedia},
+  pages={3657--3665},
+  year={2024}
+}
+
+@inproceedings{kumari2023ablating,
+  title={Ablating concepts in text-to-image diffusion models},
+  author={Kumari, Nupur and Zhang, Bingliang and Wang, Sheng-Yu and Shechtman, Eli and Zhang, Richard and Zhu, Jun-Yan},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={22691--22702},
+  year={2023}
+}
+
+@article{cywinski2025saeuron,
+  title={SAeUron: Interpretable concept unlearning in diffusion models with sparse autoencoders},
+  author={Cywi{\'n}ski, Bartosz and Deja, Kamil},
+  journal={arXiv preprint arXiv:2501.18052},
+  year={2025}
+}
+
+@article{kim2023towards,
+  title={Towards safe self-distillation of internet-scale text-to-image diffusion models},
+  author={Kim, Sanghyun and Jung, Seohyeon and Kim, Balhae and Choi, Moonseok and Shin, Jinwoo and Lee, Juho},
+  journal={arXiv preprint arXiv:2307.05977},
+  year={2023}
+}
+
+@article{heng2023selective,
+  title={Selective amnesia: A continual learning approach to forgetting in deep generative models},
+  author={Heng, Alvin and Soh, Harold},
+  journal={Advances in Neural Information Processing Systems},
+  volume={36},
+  pages={17170--17194},
+  year={2023}
+}
+
+@article{fan2023salun,
+  title={Salun: Empowering machine unlearning via gradient-based weight saliency in both image classification and generation},
+  author={Fan, Chongyu and Liu, Jiancheng and Zhang, Yihua and Wong, Eric and Wei, Dennis and Liu, Sijia},
+  journal={arXiv preprint arXiv:2310.12508},
+  year={2023}
+}
+
+@article{kurmanji2023towards,
+  title={Towards unbounded machine unlearning},
+  author={Kurmanji, Meghdad and Triantafillou, Peter and Hayes, Jamie and Triantafillou, Eleni},
+  journal={Advances in neural information processing systems},
+  volume={36},
+  pages={1957--1987},
+  year={2023}
+}
+
+@article{carlini2022privacy,
+  title={The privacy onion effect: Memorization is relative},
+  author={Carlini, Nicholas and Jagielski, Matthew and Zhang, Chiyuan and Papernot, Nicolas and Terzis, Andreas and Tramer, Florian},
+  journal={Advances in Neural Information Processing Systems},
+  volume={35},
+  pages={13263--13276},
+  year={2022}
+}
+
+@article{o2022stable,
+  title={Stable diffusion 1 vs 2-what you need to know},
+  author={O’Connor, Ryan},
+  journal={Developer Educator at AssemblyAI.(Dec. 2022),[Online]. Available: https://www. assemblyai. com/blog/stable-diffusion-1-vs-2-what-you-need-to-know},
+  year={2022}
+}
+
+@inproceedings{schramowski2023safe,
+  title={Safe latent diffusion: Mitigating inappropriate degeneration in diffusion models},
+  author={Schramowski, Patrick and Brack, Manuel and Deiseroth, Bj{\"o}rn and Kersting, Kristian},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={22522--22531},
+  year={2023}
+}
+
+@article{wu2024erasediff,
+  title={Erasediff: Erasing data influence in diffusion models},
+  author={Wu, Jing and Le, Trung and Hayat, Munawar and Harandi, Mehrtash},
+  journal={arXiv preprint arXiv:2401.05779},
+  year={2024}
+}
+
+@inproceedings{wu2024scissorhands,
+  title={Scissorhands: Scrub data influence via connection sensitivity in networks},
+  author={Wu, Jing and Harandi, Mehrtash},
+  booktitle={European Conference on Computer Vision},
+  pages={367--384},
+  year={2024},
+  organization={Springer}
+}
+
+@inproceedings{lyu2024one,
+  title={One-dimensional adapter to rule them all: Concepts diffusion models and erasing applications},
+  author={Lyu, Mengyao and Yang, Yuhong and Hong, Haiwen and Chen, Hui and Jin, Xuan and He, Yuan and Xue, Hui and Han, Jungong and Ding, Guiguang},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={7559--7568},
+  year={2024}
+}
+
+@article{hu2022lora,
+  title={Lora: Low-rank adaptation of large language models.},
+  author={Hu, Edward J and Shen, Yelong and Wallis, Phillip and Allen-Zhu, Zeyuan and Li, Yuanzhi and Wang, Shean and Wang, Lu and Chen, Weizhu and others},
+  journal={ICLR},
+  volume={1},
+  number={2},
+  pages={3},
+  year={2022}
+}
+
+@inproceedings{liu2024grounding,
+  title={Grounding dino: Marrying dino with grounded pre-training for open-set object detection},
+  author={Liu, Shilong and Zeng, Zhaoyang and Ren, Tianhe and Li, Feng and Zhang, Hao and Yang, Jie and Jiang, Qing and Li, Chunyuan and Yang, Jianwei and Su, Hang and others},
+  booktitle={European Conference on Computer Vision},
+  pages={38--55},
+  year={2024},
+  organization={Springer}
+}
+
+@article{rando2022red,
+  title={Red-teaming the stable diffusion safety filter},
+  author={Rando, Javier and Paleka, Daniel and Lindner, David and Heim, Lennart and Tram{\`e}r, Florian},
+  journal={arXiv preprint arXiv:2210.04610},
+  year={2022}
+}
+
+@article{song2020denoising,
+  title={Denoising diffusion implicit models},
+  author={Song, Jiaming and Meng, Chenlin and Ermon, Stefano},
+  journal={arXiv preprint arXiv:2010.02502},
+  year={2020}
+}
+
+@inproceedings{huberman2024edit,
+  title={An edit friendly ddpm noise space: Inversion and manipulations},
+  author={Huberman-Spiegelglas, Inbar and Kulikov, Vladimir and Michaeli, Tomer},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={12469--12478},
+  year={2024}
+}
+
+@inproceedings{rombach2022high,
+  title={High-resolution image synthesis with latent diffusion models},
+  author={Rombach, Robin and Blattmann, Andreas and Lorenz, Dominik and Esser, Patrick and Ommer, Bj{\"o}rn},
+  booktitle={Proceedings of the IEEE/CVF conference on computer vision and pattern recognition},
+  pages={10684--10695},
+  year={2022}
+}
+
+@article{ho2022classifier,
+  title={Classifier-free diffusion guidance},
+  author={Ho, Jonathan and Salimans, Tim},
+  journal={arXiv preprint arXiv:2207.12598},
+  year={2022}
+}
+
+@inproceedings{poleski2025geoguide,
+  title={GeoGuide: Geometric guidance of diffusion models},
+  author={Poleski, Mateusz and Tabor, Jacek and Spurek, Przemys{\l}aw},
+  booktitle={2025 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+  pages={297--305},
+  year={2025},
+  organization={IEEE}
+}
+
+@article{kingma2013auto,
+  title={Auto-encoding variational bayes},
+  author={Kingma, Diederik P and Welling, Max},
+  journal={arXiv preprint arXiv:1312.6114},
+  year={2013}
+}
+
+@misc{grebe2025erasedforgottenbackdoorscompromise,
+      title={Erased but Not Forgotten: How Backdoors Compromise Concept Erasure}, 
+      author={Jonas Henry Grebe and Tobias Braun and Marcus Rohrbach and Anna Rohrbach},
+      year={2025},
+    booktitle={ICML 2025 Workshop on Machine Unlearning for Generative AI},
+
+
+}
+
+@inproceedings{
+    hu2025unlearning,
+    title={Unlearning or Obfuscating? Jogging the Memory of Unlearned {LLM}s via Benign Relearning},
+    author={Shengyuan Hu and Yiwei Fu and Steven Wu and Virginia Smith},
+    booktitle={The Thirteenth International Conference on Learning Representations},
+    year={2025},
+}
+
+@InProceedings{pmlr-v32-rezende14,
+  title = 	 {Stochastic Backpropagation and Approximate Inference in Deep Generative Models},
+  author = 	 {Rezende, Danilo Jimenez and Mohamed, Shakir and Wierstra, Daan},
+  booktitle = 	 {Proceedings of the 31st International Conference on Machine Learning},
+  pages = 	 {1278--1286},
+  year = 	 {2014},
+  volume = 	 {32},
+  series = 	 {Proceedings of Machine Learning Research},
+}
+
+
+@article{nichol2021glide,
+  title={Glide: Towards photorealistic image generation and editing with text-guided diffusion models},
+  author={Nichol, Alex and Dhariwal, Prafulla and Ramesh, Aditya and Shyam, Pranav and Mishkin, Pamela and McGrew, Bob and Sutskever, Ilya and Chen, Mark},
+  journal={arXiv preprint arXiv:2112.10741},
+  year={2021}
+}
+
+
+@inproceedings{eger2020from,
+  title={From hero to zéroe: A benchmark of low-level adversarial attacks},
+  author={Eger, Steffen and Benz, Yannik},
+  booktitle={Proceedings of the 1st Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics and the 10th International Joint Conference on Natural Language Processing},
+  pages={786--803},
+  year={2020},
+  month={December}
+}
+
+@article{li2018textbugger,
+  title={TextBugger: Generating adversarial text against real-world applications},
+  author={Li, Jinfeng and Ji, Shouling and Du, Tianyu and Li, Bo and Wang, Ting},
+  journal={arXiv preprint arXiv:1812.05271},
+  year={2018}
+}
+
+@misc{suriyakumar2025unstableunlearninghiddenrisk,
+      title={Unstable Unlearning: The Hidden Risk of Concept Resurgence in Diffusion Models}, 
+      author={Vinith M. Suriyakumar and Rohan Alur and Ayush Sekhari and Manish Raghavan and Ashia C. Wilson},
+      year={2025},
+      eprint={2410.08074},
+      archivePrefix={arXiv},
+}
+
+@article{garg2020bae,
+  title={BAE: BERT-based adversarial examples for text classification},
+  author={Garg, Siddhant and Ramakrishnan, Goutham},
+  journal={arXiv preprint arXiv:2004.01970},
+  year={2020}
+}
+
+
+@article{gal2022textualinversion,
+  title={An image is worth one word: Personalizing text-to-image generation using textual inversion},
+  author={Gal, Rinon and Alaluf, Yuval and Atzmon, Yuval and Patashnik, Or and Bermano, Amit H. and Chechik, Gal and Cohen-Or, Daniel},
+  journal={arXiv preprint arXiv:2208.01618},
+  year={2022}
+}
+
+@article{chin2023p4d,
+  title={Prompting4Debugging: Red-teaming text-to-image diffusion models by finding problematic prompts},
+  author={Chin, Zhi-Yi and Jiang, Chieh-Ming and Huang, Ching-Chun and Chen, Pin-Yu and Chiu, Wei-Chen},
+  journal={arXiv preprint arXiv:2309.06135},
+  year={2023}
+}
+
+
+@article{zhang2024defensive,
+  title={Defensive Unlearning with Adversarial Training for Robust Concept Erasure in Diffusion Models},
+  author={Zhang, Yimeng and Liu, Jiancheng and Chen, Xin and Jia, Jinghan and Hong, Mingyi and Zhang, Yihua and Ding, Ke and Fan, Chongyu and Liu, Sijia},
+  journal={arXiv preprint arXiv:2405.15234},
+  year={2024}
+}
+
+@inproceedings{heusel2017ttur,
+  title     = {GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium},
+  author    = {Heusel, Martin and Ramsauer, Hubert and Unterthiner, Thomas and Nessler, Bernhard and Hochreiter, Sepp},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {30},
+  year      = {2017}
+}
+
+@article{hessel2021clipscore,
+  title   = {ClipScore: A Reference-free Evaluation Metric for Image Captioning},
+  author  = {Hessel, Jack and Holtzman, Ari and Forbes, Maxwell and Le Bras, Ronan and Choi, Yejin},
+  journal = {arXiv preprint arXiv:2104.08718},
+  year    = {2021}
+}
+
+
+@article{chen2015cococaptions,
+  title   = {Microsoft COCO Captions: Data Collection and Evaluation Server},
+  author  = {Chen, Xinlei and Fang, Hao and Lin, Tsung-Yi and Vedantam, Ramakrishna and Gupta, Saurabh and Doll{\'a}r, Piotr and Zitnick, C. Lawrence},
+  journal = {arXiv preprint arXiv:1504.00325},
+  year    = {2015}
+}
+
+@article{karras2024guiding,
+  title     = {Guiding a Diffusion Model with a Bad Version of Itself},
+  author    = {Karras, Tero and Aittala, Miika and Kynk{\"a}{\"a}nniemi, Tuomas and Lehtinen, Jaakko and Aila, Timo and Laine, Samuli},
+  journal   = {arXiv preprint arXiv:2406.02507},
+  year      = {2024},
+  note      = {NeurIPS 2024}
+}
+
+@article{kasymov2024autolora,
+  title     = {AutoLoRA: AutoGuidance Meets Low-Rank Adaptation for Diffusion Models},
+  author    = {Kasymov, Artur and Sendera, Marcin and Stypułkowski, Michał and Zięba, Maciej and Spurek, Przemysław},
+  journal   = {arXiv preprint arXiv:2410.03941},
+  year      = {2024},
+}
+
+@misc{yeats2025automatingevaluationdiffusionmodel,
+      title={Automating Evaluation of Diffusion Model Unlearning with (Vision-) Language Model World Knowledge}, 
+      author={Eric Yeats and Darryl Hannan and Henry Kvinge and Timothy Doster and Scott Mahan},
+      year={2025},
+      eprint={2507.07137},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2507.07137}, 
+}
+
+@incollection{ATKINSON196889,
+title = {Human Memory: A Proposed System and its Control Processes},
+editor = {Kenneth W. Spence and Janet Taylor Spence},
+series = {Psychology of Learning and Motivation},
+publisher = {Academic Press},
+volume = {2},
+pages = {89-195},
+year = {1968},
+issn = {0079-7421},
+doi = {https://doi.org/10.1016/S0079-7421(08)60422-3},
+url = {https://www.sciencedirect.com/science/article/pii/S0079742108604223},
+author = {R.C. Atkinson and R.M. Shiffrin},
+}
+
+@article{Scoville11,
+	author = {Scoville, William Beecher and Milner, Brenda},
+	title = {LOSS OF RECENT MEMORY AFTER BILATERAL HIPPOCAMPAL LESIONS},
+	volume = {20},
+	number = {1},
+	pages = {11--21},
+	year = {1957},
+	doi = {10.1136/jnnp.20.1.11},
+	publisher = {BMJ Publishing Group Ltd},
+	issn = {0022-3050},
+	URL = {https://jnnp.bmj.com/content/20/1/11},
+	eprint = {https://jnnp.bmj.com/content/20/1/11.full.pdf},
+	journal = {Journal of Neurology, Neurosurgery \& Psychiatry}
+}
+
+@article{loci_method,
+author = {Qureshi, Ayisha and Rizvi, Farwa and Syed, Anjum and Shahid, Aqueel and Manzoor, Hana},
+title = {The method of loci as a mnemonic device to facilitate learning in endocrinology leads to improvement in student performance as measured by assessments},
+journal = {Advances in Physiology Education},
+volume = {38},
+number = {2},
+pages = {140-144},
+year = {2014},
+doi = {10.1152/advan.00092.2013},
+    note ={PMID: 25039085},
+URL = { 
+    
+        https://doi.org/10.1152/advan.00092.2013
+},
+eprint = { 
+        https://doi.org/10.1152/advan.00092.2013
+
+}
+}
+
+
+
+
+@misc{bedapudi2019nudenet,
+  author       = {Bedapudi, P.},
+  title        = {Nudenet: Neural Nets for Nudity Classification, Detection and Selective Censoring},
+  year         = {2019},
+}
+
+
+@article{shleifer2019proxy,
+  title={Using small proxy datasets to accelerate hyperparameter search},
+  author={Shleifer, Sam and Prokop, Eric},
+  journal={arXiv preprint arXiv:1906.04887},
+  year={2019}
+}
+",
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "mainEntity": {
+      "@type": "WebPage",
+      "@id": "https://gmum.github.io/MemoRa/"
+    },
+    "about": [
+      {
+        "@type": "Thing",
+        "name": "Diffusion Models"
+      },
+      {
+        "@type": "Thing", 
+        "name": "Computer Vision"
+      }
+    ]
+  }
+  </script>
+
+</head>
+<body>
+
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- TODO: Replace with your paper title -->
+            <h1 class="title is-1 publication-title">
+              <span class="highlight-blue">Memory Self-Regeneration</span>: Uncovering Hidden Knowledge in Unlearned Models
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <!-- TODO: Replace with your paper authors and their personal links -->
+              <span class="author-block">
+                <a href="https://orcid.org/0009-0008-1583-4493" target="_blank">Agnieszka Polowczyk</a><sup>1*</sup>,</span>
+                <span class="author-block">
+                  <a href="https://orcid.org/0009-0001-3110-8255" target="_blank">Alicja Polowczyk</a><sup>1*</sup>,</span> <br>
+                  <span class="author-block">
+                    <a href="https://www.linkedin.com/in/joannawaczynska" target="_blank">Joanna Waczyńska</a><sup>2</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://www.linkedin.com/in/piotr-borycki-560052251" target="_blank">Piotr Borycki</a><sup>2</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://scholar.google.com/citations?hl=en&user=0kp0MbgAAAAJ" target="_blank">Przemysław Spurek</a><sup>2,3</sup></span>
+            </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <!-- TODO: Replace with your institution and conference/journal info -->
+                    <span class="author-block">
+                      <sup>1</sup>Silesian University of Technology 
+                      <sup>2</sup>Jagiellonian University
+                      <sup>3</sup>IDEAS Research Institute
+                    </span>
+
+                    <!-- TODO: Remove this line if no equal contribution -->
+                    <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                  <!-- TODO: Replace with your GitHub repository URL -->
+                  <span class="link-block">
+                    <a href="https://github.com/gmum/MemoRa" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- TODO: Update with your arXiv paper ID -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Teaser image-->
+<section class="hero teaser">
+  <div class="container">
+    <div class="hero-body has-text-centered">
+      <!-- TODO: Replace with your teaser image -->
+      <img src="static/images/teaser.jpg" 
+           alt="Teaser image" 
+           style="max-width: 100%; height: auto; border-radius: 10px;" loading="lazy">
+
+
+      <!-- TODO: Replace with your image description -->
+      <h2 class="subtitle has-text-centered">
+       </h2>
+    </div>
+  </div>
+</section>
+<!-- End teaser video -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <!-- TODO: Replace with your paper abstract -->
+          <p>
+          The impressive capability of modern text-to-image models to generate realistic visuals has come with a serious drawback: they can be misused to create harmful, deceptive or unlawful content. 
+          This has accelerated the push for machine unlearning. This new field seeks to selectively remove specific knowledge from a model's training data without causing a drop in its overall performance. 
+          However, it turns out that actually forgetting a given concept is an extremely difficult task. Models exposed to attacks using adversarial prompts show the ability to generate so-called unlearned concepts, which can be not only harmful but also illegal.
+           In this paper, we present considerations regarding the ability of models to forget and recall knowledge, introducing the <span class="highlight-blue"><b>Memory Self-Regeneration</b></span> task. Furthermore, we present <span class="highlight-blue"><b>MemoRa</b></span> strategy, which we consider to be a regenerative approach supporting the effective recovery of previously lost knowledge. 
+           Moreover, we propose that robustness in knowledge retrieval is a crucial yet underexplored evaluation measure for developing more robust and effective unlearning techniques. 
+          Finally, we demonstrate that forgetting occurs in two distinct ways: short-term, where concepts can be quickly recalled, and long-term, where recovery is more challenging.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<!-- Methodology -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      
+      <!-- Tytuł bez kreski -->
+      <h2 class="title is-3 has-text-centered" style="border-bottom: none; box-shadow: none; margin-bottom: 1rem;">
+        Methodology
+      </h2>
+      
+      <!-- Obrazek centralny -->
+      <div class="has-text-centered" style="margin: 1rem 0;">
+        <img src="static/images/methodology.png" 
+             alt="Methodology overview"
+             style="max-width: 70%; border-radius: 10px; box-shadow: 0 6px 18px rgba(0,0,0,0.15);" 
+             loading="lazy">
+      </div>
+      
+      <!-- Opis pod spodem -->
+      <div class="column is-8 is-offset-2">
+        <div class="content has-text-justified">
+          <p>
+            Our method aims to recover unlearned information by using only a few images containing removed concepts. 
+            We first expand the training set using <b>DDIM inversion</b> and diversify it via <b>spherical interpolation</b>. 
+            Next, we fine-tune a <b>LoRA adapter</b> to restore the erased concept. 
+            Results reveal two types of forgetting: <b>short-term</b>, where knowledge is quickly recovered, and <b>long-term</b>, where recovery is harder. 
+          </p>
+          <p>
+            We hypothesize that short-term forgetting corresponds to <b>parts of the manifold moving away</b> (the class is erased, but other classes show lower FID), while long-term forgetting reflects a <b>displacement along the manifold</b>.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- End Methodology -->
+
+
+
+
+<!-- Image carousel -->
+<section class="hero is-small">
+  <div class="hero-body" style="padding-top: 0; padding-bottom: 4rem;">
+    <div class="container">
+
+      <!-- Karuzela z napisem overlay -->
+      <div style="position: relative; max-width: 90%; margin: 0 auto;">
+        
+        <!-- Napis na środku karuzeli -->
+        <h3 style="
+          position: absolute;
+          top: 10px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(255, 255, 255, 0.8);
+          padding: 0.3rem 1rem;
+          border-radius: 8px;
+          font-size: 1.3rem;
+          color: #333;
+          font-weight: 600;
+          z-index: 10;
+        ">
+          Results
+        </h3>
+
+        <div id="results-carousel" class="carousel results-carousel" style="max-width: 100%; margin: 0 auto;">
+          <div class="item" style="display: flex; align-items: center; justify-content: center; height: 350px;">
+            <img src="static/images/nsfw_memora.png" 
+                 alt="First research result visualization" 
+                 loading="lazy"
+                 style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+          
+          <div class="item" style="display: flex; align-items: center; justify-content: center; height: 350px;">
+            <img src="static/images/church_memora.png" 
+                 alt="Second research result visualization" 
+                 loading="lazy"
+                 style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+          
+          <div class="item" style="display: flex; align-items: center; justify-content: center; height: 350px;">
+            <img src="static/images/van_gogh_memora.png" 
+                 alt="Third research result visualization" 
+                 loading="lazy"
+                 style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Opis pod karuzelą -->
+      <div class="columns is-centered" style="margin-top: 1rem;">
+        <div class="column is-8">
+          <p class="has-text-centered" style="font-size: 1.1rem; color: #555;">
+            Visualizations of images generated by SD v1.4 and its variants for the <b>nudity</b>, <b>church</b>, <b>Van Gogh</b> concepts.
+            <br>
+            First row: image generation within the unlearned models. <br>
+            Second row: image generation using the <span class="highlight-blue"><b>MemoRa</b></span> strategy.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- End image carousel -->
+
+
+
+
+
+<section class="hero is-small is-light">
+  <div class="hero-body" style="padding: 4rem 0;">
+    <div class="container">
+
+      <h2 class="title is-3" style="text-align: left; margin-bottom: 5rem;">
+        Prompt Attack vs. <span class="highlight-blue">MemoRa</span>
+      </h2>
+
+      <!-- Objects -->
+      <div class="comparison-box from-right">
+        <h3 class="title is-4 has-text-centered" style="margin-bottom: 1rem; color: #444;">
+          Objects
+        </h3>
+        <div style="display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/objects/church_sd.png" alt="Original" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle" style="margin-top: 0.5rem;">Original SD</h3>
+          </div>
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/objects/church_unlearned.png" alt="Unlearned" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle" style="margin-top: 0.5rem;">Unlearned</h3>
+          </div>
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/objects/church_diff.png" alt="Unlearned + DiffAtk" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle" style="margin-top: 0.5rem;">UnlearnDiffAtk</h3>
+          </div>
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/objects/church_memora.png" alt="MemoRa" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle has-text-centered" style="margin-top: 0.5rem;"><span class="highlight-blue"><b>MemoRa</b></span></h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nudity -->
+      <div class="comparison-box from-left">
+        <h3 class="title is-4 has-text-centered" style="margin-bottom: 1rem; color: #444;">
+          Nudity
+        </h3>
+        <div style="display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/nudity/3_sd.png" alt="Original" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle" style="margin-top: 0.5rem;">Original SD</h3>
+          </div>
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/nudity/3_unlearned.png" alt="Unlearned" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle" style="margin-top: 0.5rem;">Unlearned</h3>
+          </div>
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/nudity/3_diff.png" alt="Unlearned + DiffAtk" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle" style="margin-top: 0.5rem;">UnlearnDiffAtk</h3>
+          </div>
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/nudity/3_memora.png" alt="MemoRa" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle" style="margin-top: 0.5rem;"><span class="highlight-blue"><b>MemoRa</b></span></h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- style -->
+      <div class="comparison-box from-right">
+        <h3 class="title is-4 has-text-centered" style="margin-bottom: 1rem; color: #444;">
+          Van Gogh
+        </h3>
+        <div style="display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/style/1_sd.png" alt="Original" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle" style="margin-top: 0.5rem;">Original SD</h3>
+          </div>
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/style/1_unlearned.png" alt="Unlearned" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle" style="margin-top: 0.5rem;">Unlearned</h3>
+          </div>
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/style/1_diff.png" alt="Unlearned + DiffAtk" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle" style="margin-top: 0.5rem;">UnlearnDiffAtk</h3>
+          </div>
+          <div style="flex: 1; min-width: 200px; text-align: center;">
+            <img src="static/images/style/1_memora.png" alt="MemoRa" style="max-height: 230px; object-fit: contain; margin: 0 auto;">
+            <h3 class="subtitle" style="margin-top: 0.5rem;"><span class="highlight-blue"><b>MemoRa</b></span></h3>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h2 class="title is-3">Multi-<span class="highlight-blue">MemoRa</span></h2>
+
+      <div class="image-box">
+        <img src="static/images/mutlilora.jpg" alt="Multi-MemoRa" class="hover-image">
+
+        <div class="description">
+          <h3 class="title is-4">What is Multi-<span class="highlight-blue">MemoRa</span>?</h3>
+          <p>
+            Multi-<span class="highlight-blue"><b>MemoRa</b></span> is used for relearning multiple concepts (in this case, famous people). 
+            It is an extension of the <span class="highlight-blue"><b>MemoRa</b></span> strategy, which combines two adapters. 
+            Visualizations are presented for MACE that unlearned two celebrities.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@article{YourPaperKey2024,
+  title={Your Paper Title Here},
+  author={First Author and Second Author and Third Author},
+  journal={Conference/Journal Name},
+  year={2024},
+  url={https://your-domain.com/your-project-page}
+}</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const boxes = document.querySelectorAll('.comparison-box');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target); // tylko raz animuje
+        }
+      });
+    }, { threshold: 0.2 });
+
+    boxes.forEach(box => {
+      observer.observe(box);
+    });
+  });
+</script>
+
+
+
+
+
+  </body>
+  </html>
