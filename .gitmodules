@@ -1,3 +1,6 @@
 [submodule "diffusers"]
 	path = diffusers
 	url = https://github.com/huggingface/diffusers.git
+[submodule "Diffusion-MU-Attack"]
+	path = Diffusion-MU-Attack
+	url = https://github.com/AgnieszkaPolowczyk/Diffusion-MU-Attack.git
