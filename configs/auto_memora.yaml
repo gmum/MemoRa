@@ -1,0 +1,16 @@
+defaults:
+  - _self_
+  - model_guidance@model: model
+
+guidance:
+  lora_path: "../lora/ESD/nsfw/pytorch_lora_weights.safetensors"
+
+  steps: 50
+  guidance_scale: 7.5
+  w: 1
+  main: "lora"
+  default_seed: 2024
+  csv_path: "../prompts_csv/coco_10k.csv"
+  start_index: 0
+  n_images: 100
+  out_dir: "../guidance"
