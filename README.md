@@ -1,3 +1,5 @@
+[![arXiv](https://img.shields.io/badge/arXiv-2510.03263-red)](https://arxiv.org/abs/2510.03263)  [![ProjectPage](https://img.shields.io/badge/Website-MemoRa-blue)](https://gmum.github.io/MemoRa/)
+
 <img src="./assets/teaser.jpg" />
 
 # Memory Self-Regeneration: Uncovering Hidden Knowledge in Unlearned Models
