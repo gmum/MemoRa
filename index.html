@@ -799,12 +799,14 @@ eprint = {
         <div class="content has-text-justified">
           <!-- TODO: Replace with your paper abstract -->
           <p>
-          The impressive capability of modern text-to-image models to generate realistic visuals has come with a serious drawback: they can be misused to create harmful, deceptive or unlawful content. 
-          This has accelerated the push for machine unlearning. This new field seeks to selectively remove specific knowledge from a model's training data without causing a drop in its overall performance. 
-          However, it turns out that actually forgetting a given concept is an extremely difficult task. Models exposed to attacks using adversarial prompts show the ability to generate so-called unlearned concepts, which can be not only harmful but also illegal.
-           In this paper, we present considerations regarding the ability of models to forget and recall knowledge, introducing the <span class="highlight-blue"><b>Memory Self-Regeneration</b></span> task. Furthermore, we present <span class="highlight-blue"><b>MemoRa</b></span> strategy, which we consider to be a regenerative approach supporting the effective recovery of previously lost knowledge. 
-           Moreover, we propose that robustness in knowledge retrieval is a crucial yet underexplored evaluation measure for developing more robust and effective unlearning techniques. 
-          Finally, we demonstrate that forgetting occurs in two distinct ways: short-term, where concepts can be quickly recalled, and long-term, where recovery is more challenging.
+            The impressive capability of modern text-to-image models to generate realistic visuals has come with a serious drawback: they can be misused to create harmful, deceptive or unlawful content. 
+            This has accelerated the push for machine unlearning. This new field seeks to selectively remove specific knowledge from a model's training data without causing a drop in its overall performance. 
+            However, it turns out that actually forgetting a given concept is an extremely difficult task. 
+            Models exposed to attacks using adversarial prompts show the ability to generate so-called unlearned concepts, which can be not only harmful but also illegal.
+            In this paper, we present considerations regarding the ability of models to forget and recall knowledge, introducing the <span class="highlight-blue"><b>Memory Self-Regeneration</b></span> task. 
+            Furthermore, we present <span class="highlight-blue"><b>MemoRa</b></span> strategy, which we consider to be a regenerative approach supporting the effective recovery of previously lost knowledge. 
+            Moreover, we propose that robustness in knowledge retrieval is a crucial yet underexplored evaluation measure for developing more robust and effective unlearning techniques. 
+            Finally, we demonstrate that forgetting occurs in two distinct ways: short-term, where concepts can be quickly recalled, and long-term, where recovery is more challenging.
           </p>
         </div>
       </div>
@@ -835,13 +837,13 @@ eprint = {
       <div class="column is-8 is-offset-2">
         <div class="content has-text-justified">
           <p>
-            Our method aims to recover unlearned information by using only a few images containing removed concepts. 
-            We first expand the training set using <b>DDIM inversion</b> and diversify it via <b>spherical interpolation</b>. 
-            Next, we fine-tune a <b>LoRA adapter</b> to restore the erased concept. 
-            Results reveal two types of forgetting: <b>short-term</b>, where knowledge is quickly recovered, and <b>long-term</b>, where recovery is harder. 
+                Our method aims to recover unlearned information using only a few images that contain removed concepts. 
+                We first expand the training set using <b>DDIM inversion</b> and diversify it via <b>spherical interpolation</b>. 
+                Next, we fine-tune a <b>LoRA adapter</b> to restore the erased concept. 
+                Results reveal two types of forgetting: <b>short-term</b>, where knowledge is quickly recovered, and <b>long-term</b>, where recovery is harder. 
           </p>
           <p>
-            We hypothesize that short-term forgetting corresponds to <b>parts of the manifold moving away</b> (the class is erased, but other classes show lower FID), while long-term forgetting reflects a <b>displacement along the manifold</b>.
+            We hypothesize that short-term forgetting corresponds to superficial removal of knowledge, where concepts are not replaced but merely hidden, whereas long-term forgetting induces substantial changes in the distribution of data related to the forgotten concept, effectively altering the underlying representations.
           </p>
         </div>
       </div>
